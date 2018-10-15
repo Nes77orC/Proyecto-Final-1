@@ -1,0 +1,198 @@
+#include<iostream>
+#include<math.h>
+#include<stdlib.h>
+#include<stdio.h>
+
+using namespace std;
+void Rebotes(void);
+void ColisionesElasticas (void);
+void MovimientoParabolico (void);
+void MobimientoParabolicoRozamiento (void);
+float gravedad=9.8;
+float Pi=3.141592;
+int main()
+{
+    int MenuRaiz=0;
+    bool valMenuRaiz=false;
+    while(valMenuRaiz==false)
+    {
+    cout<<"Menú de Calculadora Física\n\n";
+    cout <<"1) Movimiento parabólico\n";
+    cout <<"2) Movimiento parabólico con fricción(Rozamiento)\n";   
+    cout <<"3) Rebotes\n";
+    cout <<"4) Colisiones elásticas\n\n";
+    cout <<"Ingrese la opción a calcular: "; cin>>MenuRaiz; cout<<endl;
+        if(MenuRaiz<0 || MenuRaiz>4)
+        {
+        system("cls"); 
+        cout <<"Ingrese una Opción Valida\n\n";
+        }
+        else
+        valMenuRaiz=true;
+    }
+
+    switch(MenuRaiz)
+    {     
+        case 1: 
+        {
+        system("cls");    
+        MovimientoParabolico ();
+        break;
+        }
+        
+        case 2:
+        {
+        system("cls");    
+        MobimientoParabolicoRozamiento ();
+ 	    break;
+        }
+        
+        case 3:
+        {
+        system("cls");
+        Rebotes ();
+        break;
+        }
+        case 4:
+        {
+        system("cls");
+        ColisionesElasticas (); 
+        break;
+        }
+    }
+}
+
+void ColisionesElasticas (void)
+{
+    float masa1, masa2, velocidadInicial1, velocidadInicial2, velocidadFinal1, velocidadFinal2;
+    bool valMenuRaiz2=false;
+    int MenuRaiz2=0;
+    cout<<"Calculo de Colisiones elásticas\n\n";
+while(valMenuRaiz2==false)
+    {
+    cout <<"1) Cuando una partícula está en reposo (m2) y otra en movimiento la choca (m1):\n";
+    cout <<"2) Cuando ambas partículas están en movimiento:\n";
+    cout <<"Ingrese la opción a calcular: "; cin>>MenuRaiz2; cout<<endl;
+        if(MenuRaiz2<0 || MenuRaiz2>2)
+        {
+        cout <<"Ingrese una Opción Valida\n\n";
+        system("cls");
+        }
+        else
+        valMenuRaiz2=true;
+    } 
+  cout<<"Ingrese la masa del cuerpo 1 (gramos): ";cin>>masa1;
+  cout<<"Ingrese la masa del cuerpo 2 (gramos): ";cin>>masa2;
+  cout<<"Ingrese la velocidad inicial del cuerpo 1 (En m/s): ";cin>>velocidadInicial1;
+      
+  if(MenuRaiz2==2)
+      {
+      cout<<"Ingrese la velocidad inicial del cuerpo 2(En m/s): ";cin>>velocidadInicial2;
+      velocidadFinal1=((masa1-masa2)/(masa1+masa2))*velocidadInicial1;
+      velocidadFinal2=((2*masa1)/(masa1+masa2))*velocidadInicial1;
+      cout<<"\n\n";
+      cout<<"Respuesta\n\n"; 
+      cout<<"La velocidad resultante del cuerpo 1 es:="<<velocidadFinal1<<" m/s\n";
+      cout<<"La velocidad resultante del cuerpo 2 es:="<<velocidadFinal2<<" m/s\n";
+      }
+  else
+      {
+      velocidadFinal1=(((masa1-masa2)/(masa1+masa2))*velocidadInicial1)+(((2*masa1)/(masa1+masa2))*velocidadInicial2);
+      velocidadFinal2=(((2*masa1)/(masa1+masa2))*velocidadInicial1)-(((masa1-masa2)/(masa1+masa2))*velocidadInicial2);
+      cout<<"\n\n";
+      cout<<"Respuesta\n\n"; 
+      cout<<"La velocidad resultante del cuerpo 1 es:="<<velocidadFinal1<<" m/s\n";
+      cout<<"La velocidad resultante del cuerpo 2 es:="<<velocidadFinal2<<" m/s\n";
+      }   
+}
+
+void Rebotes(void)
+{
+   
+ float U=0;
+ float AlturaInicial, Velocidad, AlturaNew;
+ int i;
+ bool Validador=false;
+ cout<<"Calculo de Rebotes\n\n";
+ while(Validador==false)
+      {
+      cout<<"Ingrese el coeficiente de restitución (Es una valor entre 0 y 1): ";cin>>U;
+      if(U>=0 && U<=1)
+      Validador=true;
+      else
+      {
+      system("cls");  
+      cout<<"ERROR. Ingrese un número entre 0 y 1\n";
+      }
+          
+      }
+      cout<<"Ingrese la altura de donde se lanza el objeto en metros: ";cin>>AlturaInicial;
+      cout<<"Ingrese el número de rebotes que desea analizar: ";cin>>i;
+ 
+ Velocidad=sqrt(2*AlturaInicial*gravedad);
+ cout<<"\n\n";
+ cout<<"Respuesta\n\n"; 
+ cout<<"La velocidad inicial es: "<<Velocidad<<" m/s\n";
+ for(int j=1; j<i+1; j++)
+ {
+ AlturaNew=(pow(U, (2*j)))*AlturaInicial;
+ Velocidad=sqrt(2*AlturaNew*gravedad);
+ cout<<j<<") la altura alcanzada en el rebote número "<<j<<" es: "<<AlturaNew<<" m, y la velocidad es = "<<Velocidad<<" m\n";
+ }
+}
+
+void MovimientoParabolico (void)
+{
+    
+ float Alturamax, tempoAltmax, Velx, Vely, x, y, AlturaInicial, tiempo, Angulo, grados, vo;
+      cout<<"Calculo de Movimiento Parabólico\n\n";
+      cout<<"ingrese el tiempo inicial en seg, (si no hay tiempo inicial ingrese ""0""): ";cin>>tiempo;
+      cout<<"Ingrese la altura de donde se lanza el objeto en metros (si es desde el suelo ingrese ""0""): ";cin>>AlturaInicial;
+      cout<<"ingrese el angulo de disparo en grados: ";cin>>Angulo; 
+      cout<<"ingrese la velocidad inicial en m/s: ";cin>>vo; 
+ 
+ grados=(Angulo*Pi)/180;
+ x=vo*cos(grados)*tiempo;
+ y=AlturaInicial+(vo*sin(grados)*tiempo)-(0.5*gravedad*(tiempo*tiempo));
+ Velx=vo*(cos(grados));
+ Vely=(vo*(sin(grados)))-(gravedad*tiempo);
+ tempoAltmax=vo*sin(grados)/gravedad;
+ Alturamax=(gravedad*tempoAltmax*tempoAltmax)/2;
+    cout<<"\n\n";
+    cout<<"Respuesta\n\n"; 
+    cout<<"Pocisión en X = "<<x<<" m\n";
+    cout<<"Pocisión en Y = "<<y<<" m\n";
+    cout<<"Velocidad en X = "<<Velx<<" m/s\n";
+    cout<<"Velocidad en Y = "<<Vely<<" m/s\n"; 
+    cout<<"El cuerpo alcanzo su altura maxina en: "<<tempoAltmax<<" segundos. y la altura máxima alcanzada fue de: "<<Alturamax<<"m"; 
+}
+
+
+void MobimientoParabolicoRozamiento (void)
+{
+ 
+ float grados, Velx, Vely, x, y, AlturaInicial, tiempo, Angulo, vo, K, Radio, M, AceleracionX, AceleracionY;
+      cout<<"Calculo de Movimiento Parabólico fricción (Rozamiento)\n\n";
+      cout<<"Ingrese el tiempo inicial en seg, (si no hay tiempo inicial ingrese ""0""): ";cin>>tiempo;
+      cout<<"Ingrese la altura de donde se lanza el objeto en metros (si es desde el suelo ingrese ""0""): ";cin>>AlturaInicial;
+      cout<<"Ingrese el angulo de disparo en grados: ";cin>>Angulo; 
+      cout<<"Ingrese la velocidad inicial en m/s: ";cin>>vo; 
+      cout<<"Ingrese la constante de densidad y fricción ""K"" (Aire K=1): ";cin>>K; 
+      cout<<"Ingrese el radio del objeto lanzado: ";cin>>Radio;
+      cout<<"Ingrese la masa del objeto lanzado: ";cin>>M;
+
+ AceleracionX=-1*(K*(vo*vo)*(Radio*Radio)/M)*cos(grados);
+ AceleracionY=(-1*(K*(vo*vo)*(Radio*Radio)/M)*sin(grados))-gravedad;
+ grados=(Angulo*Pi)/180;
+ x=(vo*cos(grados)*tiempo)-(0.5*AceleracionX*(tiempo*tiempo));
+ y=AlturaInicial+(vo*sin(grados)*tiempo)-(0.5*AceleracionY*(tiempo*tiempo));
+ Velx=vo*(cos(grados))-(AceleracionX*tiempo);
+ Vely=(vo*(sin(grados)))-(AceleracionY*tiempo);
+    cout<<"\n\n";
+    cout<<"Respuesta\n\n"; 
+    cout<<"Pocisión en X = "<<x<<" m\n";
+    cout<<"Pocisión en Y = "<<y<<" m\n";
+    cout<<"Velocidad en X = "<<Velx<<" m/s\n";
+    cout<<"Velocidad en Y = "<<Vely<<" m/s\n"; 
+
+}
